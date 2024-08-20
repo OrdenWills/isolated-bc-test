@@ -5,9 +5,10 @@ from flask_cors import CORS
 import google.generativeai as genai
 
 app = Flask(__name__)
+app.secret_key = os.environ.get("APP_PASSWORD")
 CORS(app)
 
-dotenv.load_dotenv('./keys.env')
+# dotenv.load_dotenv('./keys.env')
 # print(os.path.exists('./keys.env'))
 
 def init_model():
