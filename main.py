@@ -8,8 +8,8 @@ from datetime import datetime
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("APP_PASSWORD")
-CORS(app)
-socketio = SocketIO(app)
+CORS(app, resources={r"/*": {"origins": "http://localhost:5173"}})
+socketio = SocketIO(app,cors_allowed_origins="http://localhost:5173")
 
 # Directory to save videos
 SAVE_DIR = 'videos'
