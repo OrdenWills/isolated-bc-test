@@ -29,7 +29,7 @@ conversations = init_model()
 
 @app.route("/")
 def home():
-    return "you're in home page"
+    return jsonify({"response":"you're in home page"})
 
 @app.route("/prompt", methods=["POST"])
 def process_prompt():
