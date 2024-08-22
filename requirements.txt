@@ -4,3 +4,5 @@ Flask-CORS
 google-generativeai
 flask-socketio
 google-generativeai
+gevent
+gevent-websocket
