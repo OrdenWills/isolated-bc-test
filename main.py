@@ -82,7 +82,7 @@ def handle_connect():
 def handle_disconnect():
     print('Client disconnected')
 
-@socketio.on('video_data')
+@socketio.on('received')
 def handle_video_data(data):
     # Save the incoming data to a WebM file
     with open(os.path.join(SAVE_DIR, 'output.webm'), 'ab') as f:
