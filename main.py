@@ -1,3 +1,5 @@
+from gevent import monkey
+monkey.patch_all()
 import os
 import base64
 from flask import Flask, request, jsonify
@@ -89,5 +91,5 @@ def handle_video_data(data):
         f.write(data)
     emit('received', {'status': 'success'})
 
-if __name__ == '__main__':
-    socketio.run(app, debug=True)
+if __name__ == "__main__":
+    socketio.run(app, debug=True, host='0.0.0.0', port=5000)
