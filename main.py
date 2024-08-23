@@ -1,5 +1,5 @@
-from gevent import monkey
-monkey.patch_all()
+# from gevent import monkey
+# monkey.patch_all()
 import os
 import base64
 from flask import Flask, request, jsonify
@@ -40,7 +40,7 @@ def process_prompt():
     prompt = data.get('prompt')
     # temperature = data.get('temperature')
     # top_k = data.get('topK')
-    screenshot = data.get('screenshot')
+    screenshot = None
     
     try:
         # If there's no screenshot, just process the text prompt
@@ -84,12 +84,13 @@ def handle_connect():
 def handle_disconnect():
     print('Client disconnected')
 
-@socketio.on('received')
+@socketio.on('video-data')
 def handle_video_data(data):
     # Save the incoming data to a WebM file
+    print('emitting data')
     with open(os.path.join(SAVE_DIR, 'output.webm'), 'ab') as f:
         f.write(data)
     emit('received', {'status': 'success'})
 
 if __name__ == "__main__":
-    socketio.run(app, debug=True, host='0.0.0.0', port=5000)
+    socketio.run(app, debug=True, port=5000)
