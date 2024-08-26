@@ -34,31 +34,32 @@ def home():
     return jsonify({"response":"you're in home page"})
 
 structured_prompt = """
-    
-    Please provide your response in the following JSON format for multi-step processes:
-    
-    [
-      {{
-        "title": "Step 1: [Step Title]",
-        "description": [
-          "Brief overview point 1",
-          "Brief overview point 2"
-        ],
-        "view_more": "Detailed explanation of the step..."
-      }},
-      {{
-        "title": "Step 2: [Step Title]",
-        "description": [
-          "Brief overview point 1",
-          "Brief overview point 2"
-        ],
-        "view_more": "Detailed explanation of the step..."
-      }},
-      ...
-    ]
-    
-    Use this format for answers that involve multiple steps or a long process.
-    """
+
+Please provide your response in the following JSON format for multi-step processes, using default Markdown formatting within the JSON strings to preserve text styling and structure:
+
+[
+  {{
+    "title": "Step 1: [Step Title] .... # Headings for titles Add Markdown elements as needed",
+    "description": [
+      "Brief overview point 1 with **bold** or *italic* if needed",
+      "Brief overview point 2 with `code` or [links](url) if relevant"
+    ],
+    "view_more": "Detailed explanation of the step...\n\n- Use bullet points\n- # Headings\n- **Bold text**\n- *Italic text*\n- `code snippets`\n- And other Markdown elements as needed"
+  }},
+  {{
+    "title": "Step 2: [Step Title].... # Headings for titles Add Markdown elements as needed",
+    "description": [
+      "Brief overview point 1 with **bold** or *italic* if needed",
+      "Brief overview point 2 with `code` or [links](url) if relevant"
+    ],
+    "view_more": "Detailed explanation with Markdown...\n\n1. Numbered lists\n2. ## Subheadings\n3. > Blockquotes\n\nAnd so on..."
+  }},
+  ...
+]
+
+Use this format for answers that involve multiple steps or a long process. Include Markdown formatting within the JSON strings to preserve text styling and structure.
+"""
+
 
 @app.route("/prompt", methods=["POST"])
 def process_prompt():
