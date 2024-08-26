@@ -33,6 +33,33 @@ conversations = init_model()
 def home():
     return jsonify({"response":"you're in home page"})
 
+structured_prompt = """
+    
+    Please provide your response in the following JSON format for multi-step processes:
+    
+    [
+      {{
+        "title": "Step 1: [Step Title]",
+        "description": [
+          "Brief overview point 1",
+          "Brief overview point 2"
+        ],
+        "view_more": "Detailed explanation of the step..."
+      }},
+      {{
+        "title": "Step 2: [Step Title]",
+        "description": [
+          "Brief overview point 1",
+          "Brief overview point 2"
+        ],
+        "view_more": "Detailed explanation of the step..."
+      }},
+      ...
+    ]
+    
+    Use this format for answers that involve multiple steps or a long process.
+    """
+
 @app.route("/prompt", methods=["POST"])
 def process_prompt():
     data = request.json
@@ -51,7 +78,7 @@ def process_prompt():
             print(f"Completed upload: {video_file.uri}")
 
             chat = conversations.send_message(
-                [prompt,video_file],
+                [f"{prompt} {structured_prompt}",video_file],
                 safety_settings={
                     'HATE': 'BLOCK_NONE',
                     'HARASSMENT': 'BLOCK_NONE',
@@ -62,7 +89,7 @@ def process_prompt():
 
         else: 
             chat = conversations.send_message(
-                prompt,
+                f"{prompt} {structured_prompt}",
                 safety_settings={
                     'HATE': 'BLOCK_NONE',
                     'HARASSMENT': 'BLOCK_NONE',
