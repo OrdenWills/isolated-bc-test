@@ -12,6 +12,7 @@ app.secret_key = os.environ.get("APP_PASSWORD")
 CORS(app, resources={r"/*": {"origins": "http://localhost:5173"}})
 socketio = SocketIO(app,cors_allowed_origins="http://localhost:5173")
 
+
 # Directory to save videos
 SAVE_DIR = 'videos'
 if not os.path.exists(SAVE_DIR):
@@ -34,7 +35,7 @@ def home():
 
 structured_prompt = """
 
-Please provide your response in the following JSON format for multi-step processes, using default Markdown formatting within the JSON strings to preserve text styling and structure:
+Please provide your response as a valid JSON array for multi-step processes, using default Markdown formatting within the JSON strings to preserve text styling and structure:
 
 [
   {{
@@ -56,7 +57,12 @@ Please provide your response in the following JSON format for multi-step process
   ...
 ]
 
-Use this format for answers that involve multiple steps or a long process. Include Markdown formatting within the JSON strings to preserve text styling and structure.
+Important:
+1. Ensure the response is a valid JSON array without any surrounding code block markers.
+2. Use Markdown formatting within the JSON strings for text styling and structure.
+3. Escape any quotes or special characters within the JSON strings properly.
+4. Omit the "view_more" field if there's no additional information to provide.
+
 """
 
 
