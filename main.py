@@ -178,9 +178,11 @@ def handle_video_data(data):
         f.write(data)
     
     latest_screenshot = file_name
-    video_file = genai.upload_file(latest_screenshot)
-    print(f"Completed upload: {video_file.uri}")
-    time.sleep(1)
+    # Videos need to be processed before you can use them.
+    while myfile.state.name == "PROCESSING":
+        print("processing video...")
+        time.sleep(3)
+        myfile = genai.get_file(myfile.name)
     print(f'New screenshot saved: {file_name}')
     # genai.delete_file(video_file)
     # Trigger the prompt processing
