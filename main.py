@@ -9,8 +9,8 @@ from datetime import datetime
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("APP_PASSWORD")
-CORS(app, resources={r"/*": {"origins": ["chrome-extension://egefobkhhhbongifcadiakmacfjnmkel", "http://localhost:5173"]}})
-socketio = SocketIO(app,cors_allowed_origins="chrome-extension://egefobkhhhbongifcadiakmacfjnmkel")
+CORS(app, resources={r"/*": {"origins": ["chrome-extension://egefobkhhhbongifcadiakmacfjnmkel", "http://localhost:5173", "http://localhost:5173"]}})
+socketio = SocketIO(app,cors_allowed_origins="chrome-extension://egefobkhhhbongifcadiakmacfjnmkel, http://localhost:5173, http://localhost:5174")
 
 
 # Directory to save videos
